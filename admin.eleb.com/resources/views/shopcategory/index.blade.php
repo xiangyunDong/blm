@@ -12,8 +12,8 @@
         <tr>
             <td>{{$shop_category->id}}</td>
             <td>{{$shop_category->name}}</td>
-            <td>{{$shop_category->img}}</td>
-            <td>{{$shop_category->status}}</td>
+            <td><img src="{{\Illuminate\Support\Facades\Storage::url($shop_category->img)}}"style="width: 50px" ></td>
+            <td>{{$shop_category->status==1?'显示':'隐藏'}}</td>
             <td><a href="{{route('shop_categories.edit',[$shop_category])}}">编辑</a>
                 <form method="post" style="display: inline" action="{{route('shop_categories.destroy',[$shop_category])}}">
                     {{csrf_field()}}
