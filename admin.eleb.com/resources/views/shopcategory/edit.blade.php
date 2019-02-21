@@ -1,0 +1,20 @@
+@extends('layout.app')
+@section('contents')
+    <h1>商家分类修改页面</h1>
+    @include('layout._errors')
+    <form class="form-group" method="post" action="{{route('shop_categories.update',[$shopCategory])}}"enctype="multipart/form-data">
+        <label>名称</label>
+        <input class="form-control" type="text" name="name" value="{{$shopCategory->name}}" >
+        <label>图片</label>
+        <input class="form-control" type="file" name="img">
+        <td><img src="{{\Illuminate\Support\Facades\Storage::url($shopCategory->img)}}" style="width: 50px" ></td>
+        <label>状态</label>
+        <div class="form-control">
+            <input  type="radio" name="status" value="1" @if($shopCategory->status==1) checked @endif>显示
+            <input  type="radio" name="status" value="0" @if($shopCategory->status==0) checked @endif>隐藏
+        </div>
+        {{csrf_field()}}
+        {{method_field('patch')}}
+        <button class="btn bg-primary" type="submit">提交</button>
+    </form>
+@stop;
