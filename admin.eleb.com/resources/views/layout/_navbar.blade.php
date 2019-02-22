@@ -45,7 +45,7 @@
 
             <ul class="nav navbar-nav">
                 @guest()
-                <li><a href="">登录</a></li>
+                <li><a href="{{route('login')}}">登录</a></li>
                 @endguest()
                     @auth()
                 <li class="dropdown">
