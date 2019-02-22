@@ -17,6 +17,7 @@ Route::get('/', function () {
 Route::resource('shop_categories','ShopCategoryController');
 Route::resource('shops','ShopController');
 Route::resource('users','UserController');
+Route::patch('users/{user}/reset','UserController@reset')->name('users.reset');
 Route::resource('admins','AdminController');
 Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');

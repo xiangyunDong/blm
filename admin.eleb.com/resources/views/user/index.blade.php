@@ -17,6 +17,11 @@
             <td>{{$user->shop_id}}</td>
             <td>{{$user->status==1?'启用':'禁用'}}</td>
             <td><a href="{{route('users.edit',[$user])}}">编辑</a>
+                <form method="post" style="display: inline" action="{{route('users.reset',[$user])}}">
+                    {{csrf_field()}}
+                    {{method_field('patch')}}
+                    <button type="submit" class="btn btn-link">重置密码</button>
+                </form>
                 <form method="post" style="display: inline" action="{{route('users.destroy',[$user])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
