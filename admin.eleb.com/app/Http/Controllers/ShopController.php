@@ -118,4 +118,10 @@ class ShopController extends Controller
         session()->flash('success','商家删除成功');
         return redirect()->route('shops.index');
     }
+    public function audit(Shop$shop){
+        $shop->status=1;
+        $shop->save();
+        session()->flash('success','商家审核成功');
+        return redirect()->route('shops.index');
+    }
 }
