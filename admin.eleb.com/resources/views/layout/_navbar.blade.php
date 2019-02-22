@@ -17,10 +17,19 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商家管理<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商家信息管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{route('shops.create')}}">添加商家</a></li>
                         <li><a href="{{route('shops.index')}}">商家列表</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商家账号管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('users.create')}}">添加商家账号</a></li>
+                        <li><a href="{{route('users.index')}}">商家账号列表</a></li>
                     </ul>
                 </li>
             </ul>
