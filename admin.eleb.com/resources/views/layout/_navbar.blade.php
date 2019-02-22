@@ -33,6 +33,15 @@
                     </ul>
                 </li>
             </ul>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员账号管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('admins.create')}}">添加管理员账号</a></li>
+                        <li><a href="{{route('admins.index')}}">管理员账号列表</a></li>
+                    </ul>
+                </li>
+            </ul>
 
             <ul class="nav navbar-nav">
                 @guest()
