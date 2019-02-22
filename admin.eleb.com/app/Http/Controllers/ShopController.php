@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\ShopCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
@@ -47,7 +48,7 @@ class ShopController extends Controller
         Shop::create([
             'shop_category_id'=>$request->shop_category_id,
             'shop_name'=>$request->shop_name,
-            'shop_img'=>$path,
+            'shop_img'=>url(Storage::url($path)),
             'shop_rating'=>$request->shop_rating,
             'brand'=>$request->brand,
             'on_time'=>$request->on_time,
@@ -95,7 +96,7 @@ class ShopController extends Controller
         $shop->update([
             'shop_category_id'=>$request->shop_category_id,
             'shop_name'=>$request->shop_name,
-            'shop_img'=>$path,
+            'shop_img'=>url(Storage::url($path)),
             'shop_rating'=>$request->shop_rating,
             'brand'=>$request->brand,
             'on_time'=>$request->on_time,

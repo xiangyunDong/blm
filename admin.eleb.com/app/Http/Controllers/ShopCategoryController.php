@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ShopCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ShopCategoryController extends Controller
 {
@@ -38,7 +39,7 @@ class ShopCategoryController extends Controller
         $path=$img->store('public/shop_category');
         ShopCategory::create([
             'name'=>$request->name,
-            'img'=>$path,
+            'img'=>url(Storage::url($path)),
             'status'=>$request->status,
         ]);
         $request->session()->flash('success','商家分类添加成功');
@@ -66,7 +67,7 @@ class ShopCategoryController extends Controller
         $shopCategory->update([
             'name'=>$request->name,
             'status'=>$request->status,
-            'img'=>$path
+            'img'=>url(Storage::url($path)),
         ]);
         $request->session()->flash('success','商家分类修改成功');
         return redirect()->route('shop_categories.index');
