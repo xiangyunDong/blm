@@ -21,3 +21,5 @@ Route::resource('admins','AdminController');
 Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
+Route::get('admins/{admin}/password','AdminController@password')->name('admins.password');
+Route::post('admins/{admin}/password','AdminController@password1')->name('admins.password1');
