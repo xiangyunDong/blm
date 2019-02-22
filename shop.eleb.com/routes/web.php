@@ -19,3 +19,5 @@ Route::resource('shops','ShopController');
 Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
+Route::get('users/{user}/password','UserController@password')->name('users.password');
+Route::patch('users/{user}/password','UserController@password1')->name('users.password1');
