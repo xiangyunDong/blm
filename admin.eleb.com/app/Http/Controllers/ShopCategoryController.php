@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ShopCategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'
+        );
+    }
     public function index(){
        //$shop_categories=ShopCategory::all();
         $shop_categories=ShopCategory::paginate(3);

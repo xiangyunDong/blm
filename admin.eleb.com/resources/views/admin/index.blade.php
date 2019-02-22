@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('contents')
+    @include('layout._errors')
     <table class="table table-bordered">
         <tr>
             <th>id</th>

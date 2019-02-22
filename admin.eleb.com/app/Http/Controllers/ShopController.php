@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'
+        );
+    }
     public function index(){
         $shops=Shop::paginate(3);
         return view('shop.index',compact('shops'));
