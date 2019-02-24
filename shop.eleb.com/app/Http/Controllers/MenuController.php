@@ -16,9 +16,18 @@ class MenuController extends Controller
         $this->middleware('auth'
         );
     }
-    public function index(){
-        $menus=Menu::paginate(3);
-        return view('menu.index',compact('menus'));
+    public function index(Request$request){
+        $keyword=$request->keyword;
+        $price1=$request->price1;
+        $price2=$request->price2;
+        //dd($keyword);
+        if($keyword&&$price1&&$price2){
+            $menus=Menu::where([['goods_name','like',"%$keyword%"],['goods_price','>',$price1],['goods_price','<',$price2]])->paginate(3);
+        }else{
+            $menus=Menu::paginate(3);
+        }
+
+        return view('menu.index',compact('menus','keyword','price1','price2'));
     }
 
     public function create(){
@@ -70,7 +79,7 @@ class MenuController extends Controller
         $shops=Shop::all();
         return view('menu.edit',compact('menu','shops','menu_categories'));
     }
-    public function update(Request$request,Shop$shop){
+    public function update(Request$request,Menu$menu){
         $this->validate($request,[
             'goods_name'=>'required',
             'rating'=>'required|integer',
@@ -89,9 +98,9 @@ class MenuController extends Controller
         if($img){
             $path=$img->store('public/menu');
         }else{
-            $path = $shop->goods_img;
+            $path = $menu->goods_img;
         }
-        $shop->update([
+        $menu->update([
             'goods_name'=>$request->goods_name,
             'rating'=>$request->rating,
             'goods_img'=>url(Storage::url($path)),

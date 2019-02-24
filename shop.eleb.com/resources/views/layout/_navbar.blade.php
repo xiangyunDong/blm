@@ -33,6 +33,15 @@
                     </ul>
                 </li>
             </ul>
+            <form class="navbar-form navbar-left" method="get" action="{{route('menus.index')}}">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="请输入菜品关键字" name="keyword">
+                    <input type="text" class="form-control" placeholder="最低价" name="price1" style="width: 80px">
+
+                    <input type="text" class="form-control" placeholder="最高价" name="price2" style="width: 80px">
+                    </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
             <ul class="nav navbar-nav">
                 @guest()
                     <li><a href="{{route('login')}}">登录</a></li>
