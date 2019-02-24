@@ -84,4 +84,13 @@ class MenuCategoryController extends Controller
         session()->flash('success','菜品分类删除成功');
         return redirect()->route('menu_categories.index');
     }
+    public function show(MenuCategory$menuCategory){
+        $a=Menu::where('category_id',$menuCategory->id)->paginate(3);
+        if ($a->items()){
+            dd($a->items()[0]['attributes']['goods_name']);
+        }else{
+            dd('该分类下没有菜品');
+        }
+
+    }
 }

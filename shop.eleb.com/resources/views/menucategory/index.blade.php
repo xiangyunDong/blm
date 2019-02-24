@@ -17,6 +17,7 @@
             <td>{{$menu_category->shop_id}}</td>
             <td>{{$menu_category->is_selected==1?'是':'不是'}}</td>
             <td><a href="{{route('menu_categories.edit',[$menu_category])}}">编辑</a>
+                <a href="{{route('menu_categories.show',[$menu_category])}}">显示菜品</a>
                 <form method="post" style="display: inline" action="{{route('menu_categories.destroy',[$menu_category])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
