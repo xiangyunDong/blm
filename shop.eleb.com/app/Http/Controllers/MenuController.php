@@ -20,13 +20,11 @@ class MenuController extends Controller
         $keyword=$request->keyword;
         $price1=$request->price1;
         $price2=$request->price2;
-        //dd($keyword);
-        if($keyword&&$price1&&$price2){
-            $menus=Menu::where([['goods_name','like',"%$keyword%"],['goods_price','>',$price1],['goods_price','<',$price2]])->paginate(3);
-        }else{
-            $menus=Menu::paginate(3);
-        }
-
+        $wheres=[];
+        if ($keyword) $wheres[]=['goods_name','like',"%$keyword%"];
+        if ($price1) $wheres[]=['goods_price','>=',$price1];
+        if ($price2) $wheres[]=['goods_price','<=',$price2];
+        $menus=Menu::where($wheres)->paginate(3);
         return view('menu.index',compact('menus','keyword','price1','price2'));
     }
 

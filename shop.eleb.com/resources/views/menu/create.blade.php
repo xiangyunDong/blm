@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('contents')
     <h1>菜品添加页面</h1>
+    @include('vendor.ueditor.assets')
     @include('layout._errors')
     <form class="form-group" method="post" action="{{route('menus.store')}}" enctype="multipart/form-data">
         <label>名称</label>
@@ -19,6 +20,15 @@
                 <option value="{{$menu_category->id}}">{{$menu_category->name}}</option>
             @endforeach
         </select>
+        <script type="text/javascript">
+            var ue = UE.getEditor('container');
+            ue.ready(function() {
+                ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
+            });
+        </script>
+
+        <!-- 编辑器容器 -->
+        <script id="container" name="content" type="text/plain"></script>
         <label>价格</label>
         <input class="form-control" type="text" name="goods_price" value="{{old('goods_price')}}">
         <label>描述</label>

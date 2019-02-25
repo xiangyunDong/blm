@@ -25,4 +25,4 @@ Route::resource('admins','AdminController');
 Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
-
+Route::resource('activities','ActivityController');
