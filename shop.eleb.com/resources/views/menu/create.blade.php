@@ -20,15 +20,6 @@
                 <option value="{{$menu_category->id}}">{{$menu_category->name}}</option>
             @endforeach
         </select>
-        <script type="text/javascript">
-            var ue = UE.getEditor('container');
-            ue.ready(function() {
-                ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
-            });
-        </script>
-
-        <!-- 编辑器容器 -->
-        <script id="container" name="content" type="text/plain"></script>
         <label>价格</label>
         <input class="form-control" type="text" name="goods_price" value="{{old('goods_price')}}">
         <label>描述</label>

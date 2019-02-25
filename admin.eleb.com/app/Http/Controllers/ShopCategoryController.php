@@ -26,20 +26,15 @@ class ShopCategoryController extends Controller
     public function store(Request$request){
         $this->validate($request,[
             'name'=>'required',
-            'img'=>'image | required',
             'status'=>'required',
         ],[
             'name.required'=>'用户名不能为空',
-            'img.image'=>'图片规格错误',
-            'img.required'=>'图片不能为空',
             'status'=>'请选择状态'
         ]);
         //图片处理
-        $img=$request->file('img');
-        $path=$img->store('public/shop_category');
         ShopCategory::create([
             'name'=>$request->name,
-            'img'=>url(Storage::url($path)),
+            'img'=>$request->img,
             'status'=>$request->status,
         ]);
         $request->session()->flash('success','商家分类添加成功');
@@ -77,5 +72,11 @@ class ShopCategoryController extends Controller
         $shopCategory->delete();
         session()->flash('success','商品分类删除成功');
         return redirect()->route('shop_categories.index');
+    }
+
+    public function upload(Request$request){
+        $img=$request->file('file');
+        $path=Storage::url($img->store('public/shop_categorys'));
+        return ['path'=>$path];
     }
 }

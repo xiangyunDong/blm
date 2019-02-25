@@ -1,6 +1,10 @@
 @extends('layout.app')
 @section('contents')
     <h1>活动添加页面</h1>
+    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+    <script type="text/javascript" src="/webuploader/jquery.js"></script>
+    <!--引入JS-->
+    <script type="text/javascript" src="/webuploader/webuploader.js"></script>
     @include('layout._errors')
     @include('vendor.ueditor.assets')
     <form class="form-group" method="post" action="{{route('activities.store')}}" >
@@ -21,4 +25,31 @@
         {{csrf_field()}}
         <button class="btn bg-primary" type="submit">提交</button>
     </form>
+    <script>
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            // swf文件路径
+            //swf: BASE_URL + '/js/Uploader.swf',
+
+            // 文件接收服务端。
+            server:'shop_categories.upload',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            formData:{
+                _token:'{{csrf_token()}}',
+            }
+        });
+    </script>
     @stop;

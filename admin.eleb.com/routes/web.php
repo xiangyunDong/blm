@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::post('/upload','ShopCategoryController@upload')->name('upload');
 Route::resource('shop_categories','ShopCategoryController');
 Route::resource('shops','ShopController');
 Route::patch('shops/{shop}/audit','ShopController@audit')->name('shops.audit');
