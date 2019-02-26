@@ -23,3 +23,4 @@ Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
 Route::resource('menus','MenuController');
 Route::resource('menu_categories','MenuCategoryController');
+Route::resource('activities','ActivityController');

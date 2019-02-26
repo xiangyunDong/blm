@@ -43,6 +43,14 @@
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
             <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">活动管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('activities.index')}}">活动列表</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav">
                 @guest()
                     <li><a href="{{route('login')}}">登录</a></li>
                 @endguest()
