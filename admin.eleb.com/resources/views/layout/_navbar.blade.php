@@ -48,6 +48,16 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{route('activities.create')}}">添加活动</a></li>
                         <li><a href="{{route('activities.index')}}">活动列表</a></li>
+                        <form class="navbar-form navbar-left" method="get" action="{{route('activities.index')}}">
+                            <div class="form-group">
+                                <select class="form-control" name="keyword">
+                                    <option  value="1">未开始</option>
+                                    <option  value="2">进行中</option>
+                                    <option  value="-1">已结束</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </form>
                     </ul>
                 </li>
             </ul>
