@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('contents')
+    @include('layout.img')
     <h1>菜品修改页面</h1>
     @include('layout._errors')
     <form class="form-group" method="post" action="{{route('menus.update',[$menu])}}" enctype="multipart/form-data">
@@ -37,10 +38,17 @@
         <input class="form-control" type="text" name="satisfy_count" value="{{$menu->satisfy_count}}">
         <label>满意度评分</label>
         <input class="form-control" type="text" name="satisfy_rate" value="{{$menu->satisfy_rate}}">
-        <label>商品图片</label>
-        <input class="form-control" type="file" name="goods_img">
+        <label>图片</label>
+        <input type="hidden" name="goods_img" id="img_val">
+        <div id="uploader-demo">
+            <!--用来存放item-->
+            <div id="fileList" class="uploader-list"></div>
+            <div id="filePicker">选择图片</div>
+            <td><img id="img" width="50" name="img"></td>
+        </div>
+        <label>原图片</label>
         <div>
-        <td><img src="{{$menu->goods_img}}" style="width: 50"></td>
+            <td><img src="{{$menu->goods_img}}" style="width: 50px" ></td>
         </div>
         <label>状态</label>
         <div class="form-control">
@@ -51,4 +59,5 @@
         {{method_field('patch')}}
         <button class="btn bg-primary" type="submit">提交</button>
     </form>
+    @include('layout.img_script')
 @stop;

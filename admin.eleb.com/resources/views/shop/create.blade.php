@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('contents')
+    @include('layout.img')
     <h1>商家添加页面</h1>
     @include('layout._errors')
     <form class="form-group" method="post" action="{{route('shops.store')}}" enctype="multipart/form-data">
@@ -12,7 +13,13 @@
         <label>名称</label>
         <input class="form-control" type="text" name="shop_name" value="{{old('shop_name')}}">
         <label>店铺图片</label>
-        <input class="form-control" type="file" name="shop_img">
+        <input type="hidden" name="shop_img" id="img_val">
+        <div id="uploader-demo">
+            <!--用来存放item-->
+            <div id="fileList" class="uploader-list"></div>
+            <div id="filePicker">选择图片</div>
+            <td><img id="img" width="50" name="img"></td>
+        </div>
         <label>评分</label>
         <input class="form-control" type="text" name="shop_rating">
         <label>是否品牌</label>
@@ -62,4 +69,5 @@
         {{csrf_field()}}
         <button class="btn bg-primary" type="submit">提交</button>
     </form>
+    @include('layout.img_script')
     @stop;

@@ -53,16 +53,10 @@ class ShopCategoryController extends Controller
             'name.required'=>'用户名不能为空',
             'status'=>'请选择状态'
         ]);
-        $img=$request->file('img');
-        if($img){
-            $path=$img->store('public/shop_category');
-        }else{
-            $path = $shopCategory->img;
-        }
         $shopCategory->update([
             'name'=>$request->name,
             'status'=>$request->status,
-            'img'=>url(Storage::url($path)),
+            'img'=>$request->img,
         ]);
         $request->session()->flash('success','商家分类修改成功');
         return redirect()->route('shop_categories.index');

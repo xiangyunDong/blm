@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('contents')
+    @include('layout.img')
     <h1>商家修改页面</h1>
     @include('layout._errors')
     <form class="form-group" method="post" action="{{route('shops.update',[$shop])}}" enctype="multipart/form-data">
@@ -13,9 +14,17 @@
         </select>
         <label>名称</label>
         <input class="form-control" type="text" name="shop_name" value="{{$shop->shop_name}}">
-        <label>店铺图片</label>
-        <input class="form-control" type="file" name="shop_img">
-        <td><img src="{{\Illuminate\Support\Facades\Storage::url($shop->shop_img)}}" style="width: 50px" ></td>
+        <label>图片</label>
+        <input type="hidden" name="shop_img" id="img_val">
+        <div id="uploader-demo">
+            <!--用来存放item-->
+            <div id="fileList" class="uploader-list"></div>
+            <div id="filePicker">选择图片</div>
+            <td><img id="img" width="50" name="img"></td>
+        </div>
+        <label>原图片</label>
+        <div>
+            <td><img src="{{$shop->shop_img}}" style="width: 50px" ></td>
         <label>评分</label>
         <input class="form-control" type="text" name="shop_rating" value="{{$shop->shop_rating}}">
         <label>是否品牌</label>
@@ -66,4 +75,5 @@
         {{method_field('patch')}}
         <button class="btn bg-primary" type="submit">提交</button>
     </form>
+    @include('layout.img_script')
 @stop;

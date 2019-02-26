@@ -47,16 +47,13 @@ class MenuController extends Controller
             'tips'=>'required',
             'satisfy_count'=>'required|integer',
             'satisfy_rate'=>'required|integer',
-            'goods_img'=>'image | required',
             'status'=>'required',
         ]);
         //图片处理
-        $img=$request->file('goods_img');
-        $path=$img->store('public/menu');
         Menu::create([
             'goods_name'=>$request->goods_name,
             'rating'=>$request->rating,
-            'goods_img'=>url(Storage::url($path)),
+            'goods_img'=>$request->goods_img,
             'shop_id'=>$request->shop_id,
             'category_id'=>$request->category_id,
             'goods_price'=>$request->goods_price,
@@ -92,16 +89,10 @@ class MenuController extends Controller
             'satisfy_rate'=>'required|integer',
             'status'=>'required',
         ]);
-        $img=$request->file('goods_img');
-        if($img){
-            $path=$img->store('public/menu');
-        }else{
-            $path = $menu->goods_img;
-        }
         $menu->update([
             'goods_name'=>$request->goods_name,
             'rating'=>$request->rating,
-            'goods_img'=>url(Storage::url($path)),
+            'goods_img'=>$request->goods_img,
             'shop_id'=>$request->shop_id,
             'category_id'=>$request->category_id,
             'goods_price'=>$request->goods_price,
@@ -127,5 +118,10 @@ class MenuController extends Controller
         $shop->save();
         session()->flash('success','商家审核成功');
         return redirect()->route('shops.index');
+    }
+    public function upload(Request$request){
+        $img=$request->file('file');
+        $path=Storage::url($img->store('public/menus'));
+        return ['path'=>$path];
     }
 }

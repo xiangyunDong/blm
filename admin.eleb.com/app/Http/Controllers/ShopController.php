@@ -28,7 +28,6 @@ class ShopController extends Controller
         $this->validate($request,[
             'shop_category_id'=>'required',
             'shop_name'=>'required',
-            'shop_img'=>'image | required',
             'shop_rating'=>'required',
             'brand'=>'required',
             'on_time'=>'required',
@@ -43,12 +42,10 @@ class ShopController extends Controller
             'status'=>'required',
         ]);
         //图片处理
-        $img=$request->file('shop_img');
-        $path=$img->store('public/shop');
         Shop::create([
             'shop_category_id'=>$request->shop_category_id,
             'shop_name'=>$request->shop_name,
-            'shop_img'=>url(Storage::url($path)),
+            'shop_img'=>$request->shop_img,
             'shop_rating'=>$request->shop_rating,
             'brand'=>$request->brand,
             'on_time'=>$request->on_time,
@@ -87,16 +84,10 @@ class ShopController extends Controller
             'discount'=>'required',
             'status'=>'required',
         ]);
-        $img=$request->file('shop_img');
-        if($img){
-            $path=$img->store('public/shop');
-        }else{
-            $path = $shop->shop_img;
-        }
         $shop->update([
             'shop_category_id'=>$request->shop_category_id,
             'shop_name'=>$request->shop_name,
-            'shop_img'=>url(Storage::url($path)),
+            'shop_img'=>$request->shop_img,
             'shop_rating'=>$request->shop_rating,
             'brand'=>$request->brand,
             'on_time'=>$request->on_time,

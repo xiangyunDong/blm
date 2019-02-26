@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('contents')
+    @include('layout.img')
     <h1>菜品添加页面</h1>
     @include('vendor.ueditor.assets')
     @include('layout._errors')
@@ -35,7 +36,13 @@
         <label>满意度评分</label>
         <input class="form-control" type="text" name="satisfy_rate" value="{{old('satisfy_rate')}}">
         <label>商品图片</label>
-        <input class="form-control" type="file" name="goods_img">
+        <input type="hidden" name="goods_img" id="img_val">
+        <div id="uploader-demo">
+            <!--用来存放item-->
+            <div id="fileList" class="uploader-list"></div>
+            <div id="filePicker">选择图片</div>
+            <td><img id="img" width="50" name="img"></td>
+        </div>
         <label>状态</label>
         <div class="form-control">
             <input  type="radio" name="status" value="1">上架
@@ -44,4 +51,5 @@
         {{csrf_field()}}
         <button class="btn bg-primary" type="submit">提交</button>
     </form>
+    @include('layout.img_script')
     @stop;

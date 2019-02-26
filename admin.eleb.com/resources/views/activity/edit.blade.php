@@ -13,7 +13,7 @@
                 ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
             });
         </script>
-        <script id="container" name="content" type="text/plain" >{{$activity->content}}</script>
+        <script id="container" name="content" type="text/plain" >{!!$activity->content!!}</script>
         <label>活动开始时间</label>
         <input type="date" class="form-control" name="start_time" value="{{substr($activity->start_time,0,10)}}">
         <label>活动结束时间</label>
