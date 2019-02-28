@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 Route::post('/upload','ShopCategoryController@upload')->name('upload');
 Route::resource('shop_categories','ShopCategoryController');

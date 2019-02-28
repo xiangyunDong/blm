@@ -72,52 +72,6 @@ echo <<<JSON
         "estimate_time": 31,
         "notice": "新店开张，优惠大酬宾！",
         "discount": "新用户有巨额优惠！",
-        "evaluate": [{
-                "user_id": 12344,
-                "username": "w******k",
-                "user_img": "/images/slider-pic4.jpeg",
-                "time": "2017-2-22",
-                "evaluate_code": 1,
-                "send_time": 30,
-                "evaluate_details": "不怎么好吃"
-            },
-            {
-                "user_id": 12344,
-                "username": "w******k",
-                "user_img": "/images/slider-pic4.jpeg",
-                "time": "2017-2-22",
-                "evaluate_code": 4.5,
-                "send_time": 30,
-                "evaluate_details": "很好吃"
-            },
-            {
-                "user_id": 12344,
-                "username": "w******k",
-                "user_img": "/images/slider-pic4.jpeg",
-                "time": "2017-2-22",
-                "evaluate_code": 5,
-                "send_time": 30,
-                "evaluate_details": "很好吃"
-            },
-            {
-                "user_id": 12344,
-                "username": "w******k",
-                "user_img": "/images/slider-pic4.jpeg",
-                "time": "2017-2-22",
-                "evaluate_code": 4.7,
-                "send_time": 30,
-                "evaluate_details": "很好吃"
-            },
-            {
-                "user_id": 12344,
-                "username": "w******k",
-                "user_img": "/images/slider-pic4.jpeg",
-                "time": "2017-2-22",
-                "evaluate_code": 5,
-                "send_time": 30,
-                "evaluate_details": "很好吃"
-            }
-        ],
         "commodity": [{
                 "description": "大家喜欢吃，才叫真好吃。",
                 "is_selected": true,

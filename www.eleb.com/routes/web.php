@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//接口
+Route::get('/api/bussiness_list','Api\ApiController@businessList');
+Route::get('/api/bussiness','Api\ApiController@business');
+Route::get('/view/api/sms','Api\ApiController@sms');
+Route::post('/api/regist','Api\ApiController@regist');
+Route::post('/api/login','Api\ApiController@login');

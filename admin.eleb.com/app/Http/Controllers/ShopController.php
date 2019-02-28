@@ -15,6 +15,7 @@ class ShopController extends Controller
         );
     }
     public function index(){
+
         $shops=Shop::paginate(3);
         return view('shop.index',compact('shops'));
     }

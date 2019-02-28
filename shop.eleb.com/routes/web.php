@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 Route::get('users/password','UserController@password')->name('users.password');
 Route::patch('users/password','UserController@password1')->name('users.password1');

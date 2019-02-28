@@ -1,10 +1,10 @@
 window.api = {
   // 登录验证接口
-  loginCheck: '/loginCheck.php',
+  loginCheck: '/api/login',
   // 获取短信验证码接口
-  sms: '/sms.php',
+  sms: '/view/api/sms',
   // 注册接口
-  regist: '/regist.php',
+  regist: '/api/regist',
   // 修改密码接口
   changePassword: '/changePassword.php',
   // 忘记密码接口
@@ -22,9 +22,9 @@ window.api = {
   // 获得指定订单接口
   order: '/order.php',
   // 获得商家列表接口
-  businessList: '/businessList.php',
+  businessList: '/api/bussiness_list',
   // 获得指定商家接口
-  business: '/business.php',
+  business: '/api/bussiness',
   // 保存购物车接口
   addCart: '/addCart.php',
   // 获取购物车数据接口
