@@ -10,13 +10,13 @@ window.api = {
   // 忘记密码接口
   forgetPassword: '/forgetPassword.php',
   // 地址列表接口
-  addressList: '/addressList.php',
+  addressList: '/api/address_list',
   // 指定地址接口
-  address: '/address.php',
+  address: '/api/address',
   // 保存新增地址接口
-  addAddress: '/addAddress.php',
+  addAddress: '/api/addAddress',
   // 保存修改地址接口
-  editAddress: '/editAddress.php',
+  editAddress: '/api/editAddress',
   // 获得订单列表接口
   orderList: '/orderList.php',
   // 获得指定订单接口
