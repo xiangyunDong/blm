@@ -24,3 +24,5 @@ Route::get('/api/address_list','Api\ApiController@addressList');
 Route::post('/api/addAddress','Api\ApiController@addAddress');
 Route::get('/api/address','Api\ApiController@address');
 Route::post('/api/editAddress','Api\ApiController@editAddress');
+Route::get('/api/cart','Api\ApiController@cart');
+Route::post('/api/addCart','Api\ApiController@addCart');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Address;
+use App\Cart;
 use App\Member;
 use App\Menu;
 use App\MenuCategory;
@@ -183,5 +184,39 @@ class ApiController extends Controller
         //dd($a);
         return["status"=>"true",
       "message"=>"修改成功"];
+    }
+
+    public function cart(){
+        $goods_list=Cart::where('user_id',Auth::user()->id)->all();
+        //return$goods_list;
+        $total=0;
+        foreach ($goods_list as $goods):
+            $good=Menu::where('id',$goods->goods_id)->first();
+            $goods['goods_name']=$good->goods_name;
+            $goods['goods_img']=$good->goods_img;
+            $goods['goods_price']=$good->goods_price;
+            $total+=$goods->amount * $good->goods_price;
+            endforeach;
+
+        return ["goods_list"=>$goods_list,"totalCost"=>$total];
+    }
+
+
+    public function addCart(Request$request)
+    {
+        $goodslist=$request->goodsList;
+        //dd($goodslist[0]);
+        $goodscount=$request->goodsCount;
+        //dd($goodscount[0]);
+        for($i=0;$i<count($request->goodsList);$i++):
+            //dd(count($request->goodsList));
+        Cart::create([
+            'user_id'=>Auth::user()->id,
+            'goods_id'=>$goodslist[$i],
+            'amount'=>$goodscount[$i]
+        ]);
+        endfor;
+        return["status"=>"true",
+      "message"=> "添加成功"];
     }
 }
