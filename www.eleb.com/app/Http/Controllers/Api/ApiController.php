@@ -80,7 +80,7 @@ class ApiController extends Controller
     public function regist(Request$request)
     {
         if(!Redis::get($request->tel)==$request->sms){
-            return back()->with('danger','验证码错误');
+            return ["status" => "false", "message" => "注册失败"];
         };
         $this->validate($request, [
             'username' => 'unique:members',
@@ -324,5 +324,33 @@ class ApiController extends Controller
         return $orders;
     }
 
+    public function changePassword(Request$request){
+        $oldpassword=$request->oldPassword;
+        $newpassword=$request->newPassword;
 
+        $this->validate($request,[
+            'oldPassword'=>'required',
+            'newPassword'=>'required',
+        ]);
+
+        if (Hash::check($oldpassword,Auth::user()->password)) {
+            Auth::user()->password=Hash::make($newpassword);
+            Auth::user()->save();
+            return ["status"=>"true",
+                    "message"=>"修改成功"];
+        }else{
+            return ["status"=>"false",
+                "message"=>"修改失败"];
+        }
+    }
+
+    public function forgetPassword(Request$request){
+        if(!Redis::get($request->tel)==$request->sms){
+            return ["status" => "false", "message" => "验证码错误"];
+        };
+        $members=Member::where('tel',$request->tel)->first();
+        $members->password=Hash::make($request->password);
+        $members->save();
+        return ["status" => "true", "message" => "修改密码成功"];
+    }
 }

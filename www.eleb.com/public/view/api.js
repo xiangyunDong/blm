@@ -6,9 +6,9 @@ window.api = {
   // 注册接口
   regist: '/api/regist',
   // 修改密码接口
-  changePassword: '/changePassword.php',
+  changePassword: '/api/changePassword',
   // 忘记密码接口
-  forgetPassword: '/forgetPassword.php',
+  forgetPassword: '/api/forgetPassword',
   // 地址列表接口
   addressList: '/api/address_list',
   // 指定地址接口
