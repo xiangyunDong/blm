@@ -28,3 +28,4 @@ Route::get('/api/cart','Api\ApiController@cart');
 Route::post('/api/addCart','Api\ApiController@addCart');
 Route::post('/api/addOrder','Api\ApiController@addOrder');
 Route::get('/api/Order','Api\ApiController@Order');
+Route::get('/api/OrderList','Api\ApiController@OrderList');

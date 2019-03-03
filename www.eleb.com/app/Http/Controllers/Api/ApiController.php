@@ -294,4 +294,35 @@ class ApiController extends Controller
         $orders["order_status"]=$status;
         return $orders;
     }
+
+    public function OrderList(){
+        $orders=Order::where('user_id',Auth::user()->id)->get();
+        foreach ($orders as $order):
+            $shop=Shop::where('id',$order->shop_id)->first();
+            $order["shop_name"]=$shop->shop_name;
+            $order["shop_img"]=$shop->shop_img;
+            $order_detail=OrderDetail::where('order_id',$order->id)->get();
+            //dd($order_detail);
+            $order["goods_list"]=$order_detail;
+            $order["order_price"]=$order->total;
+            $order["order_address"]=$order->address;
+            $order["order_code"]=$order->sn;
+            $order["order_birth_time"]=substr($order->created_at,0,16);
+            if($order->status==-1){
+                $status="已取消";
+            }elseif($order->status==0){
+                $status="待支付";
+            }elseif($order->status==1){
+                $status = "待发货";
+            }elseif($order->status==2){
+                $status = "待确认";
+            }else{
+                $status = "完成";
+            }
+            $order["order_status"]=$status;
+        endforeach;
+        return $orders;
+    }
+
+
 }
