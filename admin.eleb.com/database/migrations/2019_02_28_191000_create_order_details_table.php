@@ -22,6 +22,7 @@ class CreateOrderDetailsTable extends Migration
             $table->string('goods_img');
             $table->decimal('goods_price');
             $table->timestamps();
+            $table->engine='InnoDB';
         });
     }
 

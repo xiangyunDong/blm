@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->integer('status');
             $table->string('out_trade_no');
             $table->timestamps();
+            $table->engine='InnoDB';
         });
     }
 

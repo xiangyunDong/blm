@@ -13,6 +13,7 @@ use App\Shop;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Qcloud\Sms\SmsSingleSender;
@@ -223,6 +224,7 @@ class ApiController extends Controller
 
 
     public function addOrder(Request$request){
+        DB::beginTransaction();
         $total=0;
         $goods=Cart::first();
         $shop=Menu::where('id',$goods->goods_id)->first();
@@ -248,7 +250,7 @@ class ApiController extends Controller
         $order->total=$total;
         $order->status=0;
         $order->out_trade_no=rand('0000000','9999999');
-        $order->save();
+        $a=$order->save();
 //订单详情表
         foreach($carts as $cart):
             $order_detail=new OrderDetail();
@@ -259,12 +261,22 @@ class ApiController extends Controller
             $order_detail->goods_name=$goods->goods_name;
             $order_detail->goods_img=$goods->goods_img;
             $order_detail->goods_price=$goods->goods_price;
-            $order_detail->save();
+            $b=$order_detail->save();
         endforeach;
-        return[
-            "status"=>"true",
-      "message"=>"添加成功",
-      "order_id"=>$order_detail->order_id];
+        if ($a&&$b){
+            DB::commit();
+            return[
+                "status"=>"true",
+                "message"=>"添加成功",
+                "order_id"=>$order_detail->order_id];
+        }else{
+            DB::rollBack();
+            return[
+                "status"=>"false",
+                "message"=>"添加失败"];
+        }
+
+
     }
 
     public function Order(Request$request){
