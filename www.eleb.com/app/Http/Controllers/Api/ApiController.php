@@ -7,6 +7,8 @@ use App\Cart;
 use App\Member;
 use App\Menu;
 use App\MenuCategory;
+use App\Order;
+use App\OrderDetail;
 use App\Shop;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -88,8 +90,8 @@ class ApiController extends Controller
 
         Member::create([
             'username' => $request->username,
-            'tel' => $request->tel,
             'password' => Hash::make($request->password),
+            'tel' => $request->tel,
             'rememberToken'=>0,
         ]);
         return ["status" => "true", "message" => "注册成功"];
@@ -112,12 +114,13 @@ class ApiController extends Controller
                 "user_id"=>Auth::user()->id,
                 "username"=>Auth::user()->username];
         }else{
-            return back()->with('danger','用户名或密码错误');
+            return ["status"=>"false",
+                "message"=>"登录失败",];
         }
     }
 
     public function addressList(Request$request){
-        $addresses=Address::all();
+        $addresses=Address::where('user_id',Auth::user()->id)->get();
 
         return$addresses;
 
@@ -171,9 +174,7 @@ class ApiController extends Controller
         ]);
 
         $address->where('id',$request->id)->update([
-           // dd(1),
             'name' => $request->name,
-            //dd($request->name),
             'tel' => $request->tel,
             'province'=>$request->provence,
             'city'=>$request->city,
@@ -181,17 +182,17 @@ class ApiController extends Controller
             'address'=>$request->detail_address,
             'is_default'=>0,
         ]);
-        //dd($a);
         return["status"=>"true",
       "message"=>"修改成功"];
     }
 
     public function cart(){
-        $goods_list=Cart::where('user_id',Auth::user()->id)->all();
+        $goods_list=Cart::where('user_id',Auth::user()->id)->get();
         //return$goods_list;
         $total=0;
         foreach ($goods_list as $goods):
             $good=Menu::where('id',$goods->goods_id)->first();
+        //var_dump($good);exit;
             $goods['goods_name']=$good->goods_name;
             $goods['goods_img']=$good->goods_img;
             $goods['goods_price']=$good->goods_price;
@@ -218,5 +219,79 @@ class ApiController extends Controller
         endfor;
         return["status"=>"true",
       "message"=> "添加成功"];
+    }
+
+
+    public function addOrder(Request$request){
+        $total=0;
+        $goods=Cart::first();
+        $shop=Menu::where('id',$goods->goods_id)->first();
+        $address=Address::where('id',$request->address_id)->first();
+        $carts=Cart::where('user_id',Auth::user()->id)->get();
+      foreach ($carts as $cart):
+          $good=Menu::where('id',$cart->goods_id)->first();
+      $goods_price=$good->goods_price;
+      $amount=$cart->amount;
+      $total+=$goods_price*$amount;
+      endforeach;
+      //dd($total);
+    $order=new Order();
+        $order->user_id=Auth::user()->id;
+        $order->shop_id=$shop->shop_id;
+        $order->sn=date("Y-m-d H:m:s");
+        $order->province=$address->province;
+        $order->city=$address->city;
+        $order->county=$address->county;
+        $order->address=$address->address;
+        $order->tel=$address->tel;
+        $order->name=$address->name;
+        $order->total=$total;
+        $order->status=0;
+        $order->out_trade_no=rand('0000000','9999999');
+        $order->save();
+//订单详情表
+        foreach($carts as $cart):
+            $order_detail=new OrderDetail();
+                $order_detail->order_id=$order->id;
+                $order_detail->goods_id=$cart->goods_id;
+                $order_detail->amount=$cart->amount;
+                $goods=Menu::where('id',$order_detail->goods_id)->first();
+            $order_detail->goods_name=$goods->goods_name;
+            $order_detail->goods_img=$goods->goods_img;
+            $order_detail->goods_price=$goods->goods_price;
+            $order_detail->save();
+        endforeach;
+        return[
+            "status"=>"true",
+      "message"=>"添加成功",
+      "order_id"=>$order_detail->order_id];
+    }
+
+    public function Order(Request$request){
+        $orders=Order::where('id',$request->id)->first();
+        //dd($orders->shop_id);
+        $shop=Shop::where('id',$orders->shop_id)->first();
+        $orders["shop_name"]=$shop->shop_name;
+        $orders["shop_img"]=$shop->shop_img;
+        $order_detail=OrderDetail::where('order_id',$orders->id)->get();
+        //dd($order_detail);
+        $orders["goods_list"]=$order_detail;
+        $orders["order_price"]=$orders->total;
+        $orders["order_address"]=$orders->address;
+        $orders["order_code"]=$orders->sn;
+        $orders["order_birth_time"]=substr($orders->created_at,0,16);
+        if($orders->status==-1){
+            $status="已取消";
+        }elseif($orders->status==0){
+            $status="待支付";
+        }elseif($orders->status==1){
+            $status = "待发货";
+        }elseif($orders->status==2){
+            $status = "待确认";
+        }else{
+            $status = "完成";
+        }
+        $orders["order_status"]=$status;
+        return $orders;
     }
 }
