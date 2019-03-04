@@ -237,7 +237,7 @@ class ApiController extends Controller
       $total+=$goods_price*$amount;
       endforeach;
       //dd($total);
-      
+
 
 
     $order=new Order();

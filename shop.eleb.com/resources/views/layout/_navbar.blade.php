@@ -51,6 +51,14 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">订单管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('orders.index')}}">订单列表</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav">
                 @guest()
                     <li><a href="{{route('login')}}">登录</a></li>
                 @endguest()

@@ -25,3 +25,6 @@ Route::post('/upload','MenuController@upload')->name('upload');
 Route::resource('menus','MenuController');
 Route::resource('menu_categories','MenuCategoryController');
 Route::resource('activities','ActivityController');
+Route::resource('orders','OrderController');
+Route::patch('orders/{order}/send','OrderController@send')->name('orders.send');
+Route::patch('orders/{order}/cancel','OrderController@cancel')->name('orders.cancel');
