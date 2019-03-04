@@ -27,3 +27,5 @@ Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
 Route::resource('activities','ActivityController');
+Route::resource('members','MemberController');
+Route::patch('members/{member}/reset','MemberController@reset')->name('members.reset');

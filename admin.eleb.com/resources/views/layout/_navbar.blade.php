@@ -35,6 +35,20 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">会员账号管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('members.index')}}">会员账号列表</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" method="get" action="{{route('members.index')}}">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="请输入会员名或手机号" name="keyword">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员账号管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{route('admins.create')}}">添加管理员账号</a></li>
