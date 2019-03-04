@@ -30,6 +30,16 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{route('menus.create')}}">添加菜品</a></li>
                         <li><a href="{{route('menus.index')}}">菜品列表</a></li>
+                        <form class="navbar-form navbar-left" method="get" action="{{route('activities.index')}}">
+                            <div class="form-group">
+                                <select class="form-control" name="keyword">
+                                    <option  value="1">近7天</option>
+                                    <option  value="2">近3月</option>
+                                    <option  value="-1">总计</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </form>
                     </ul>
                 </li>
             </ul>
@@ -55,6 +65,16 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">订单管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{route('orders.index')}}">订单列表</a></li>
+                        <form class="navbar-form navbar-left" method="get" action="{{route('orders.count')}}">
+                            <div class="form-group">
+                                <select class="form-control" name="keyword">
+                                    <option  value="1">近7天</option>
+                                    <option  value="2">近3月</option>
+                                    <option  value="-1">总计</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </form>
                     </ul>
                 </li>
             </ul>
