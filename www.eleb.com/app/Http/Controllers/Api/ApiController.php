@@ -237,6 +237,9 @@ class ApiController extends Controller
       $total+=$goods_price*$amount;
       endforeach;
       //dd($total);
+      
+
+
     $order=new Order();
         $order->user_id=Auth::user()->id;
         $order->shop_id=$shop->shop_id;
@@ -265,6 +268,7 @@ class ApiController extends Controller
         endforeach;
         if ($a&&$b){
             DB::commit();
+            DB::delete('delete from carts');
             return[
                 "status"=>"true",
                 "message"=>"添加成功",
@@ -314,7 +318,6 @@ class ApiController extends Controller
             $order["shop_name"]=$shop->shop_name;
             $order["shop_img"]=$shop->shop_img;
             $order_detail=OrderDetail::where('order_id',$order->id)->get();
-            //dd($order_detail);
             $order["goods_list"]=$order_detail;
             $order["order_price"]=$order->total;
             $order["order_address"]=$order->address;
