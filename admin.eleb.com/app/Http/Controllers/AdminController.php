@@ -6,6 +6,7 @@ use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -20,7 +21,8 @@ class AdminController extends Controller
 }
 
     public function create(){
-        return view('admin.create');
+        $roles=Role::all();
+        return view('admin.create',compact('roles'));
     }
 
     public function store(Request$request){
@@ -34,17 +36,20 @@ class AdminController extends Controller
             'password.required'=>'密码不能为空',
         ]);
 
-        Admin::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
-        ]);
+        $admin= new Admin;
+            $admin->name=$request->name;
+            $admin->email=$request->email;
+            $admin->password=Hash::make($request->password);
+            $admin->save();
+
+        $admin->syncRoles($request->roles);
         $request->session()->flash('success','管理员账号添加成功');
         return redirect()->route('admins.index');
     }
 
     public function edit(Admin$admin){
-        return view('admin.edit',compact('admin'));
+        $roles=Role::all();
+        return view('admin.edit',compact('admin','roles'));
     }
     public function update(Request$request,Admin$admin){
         $this->validate($request,[
@@ -59,6 +64,7 @@ class AdminController extends Controller
             'name'=>$request->name,
             'email'=>$request->email,
         ]);
+        $admin->syncRoles($request->roles);
         $request->session()->flash('success','商家账号修改成功');
         return redirect()->route('admins.index');
     }

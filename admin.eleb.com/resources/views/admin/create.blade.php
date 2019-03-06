@@ -9,6 +9,12 @@
         <input class="form-control" type="text" name="email" value="{{old('email')}}">
         <label>密码</label>
         <input class="form-control" type="password" name="password" value="{{old('password')}}">
+        <label>角色</label>
+        <div class="form-control">
+            @foreach($roles as $role)
+                <input type="checkbox" name="roles[]" value="{{$role->name}}">{{$role->name}}
+            @endforeach
+        </div>
         {{csrf_field()}}
         <button class="btn bg-primary" type="submit">提交</button>
     </form>
