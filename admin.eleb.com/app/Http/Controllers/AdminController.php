@@ -15,9 +15,9 @@ class AdminController extends Controller
         );
     }
     public function index(){
-        $admins=Admin::paginate(3);
-        return view('admin.index',compact('admins'));
-    }
+    $admins=Admin::paginate(3);
+    return view('admin.index',compact('admins'));
+}
 
     public function create(){
         return view('admin.create');

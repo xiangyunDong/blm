@@ -75,7 +75,17 @@
                     </ul>
                 </li>
             </ul>
-
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">RBAC<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('permissions.create')}}">添加权限</a></li>
+                        <li><a href="{{route('permissions.index')}}">权限列表</a></li>
+                        <li><a href="{{route('roles.create')}}">添加角色</a></li>
+                        <li><a href="{{route('roles.index')}}">角色列表</a></li>
+                    </ul>
+                </li>
+            </ul>
             <ul class="nav navbar-nav">
                 @guest()
                 <li><a href="{{route('login')}}">登录</a></li>

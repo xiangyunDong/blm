@@ -30,7 +30,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{route('menus.create')}}">添加菜品</a></li>
                         <li><a href="{{route('menus.index')}}">菜品列表</a></li>
-                        <form class="navbar-form navbar-left" method="get" action="{{route('activities.index')}}">
+                        <form class="navbar-form navbar-left" method="get" action="{{route('menus.count')}}">
                             <div class="form-group">
                                 <select class="form-control" name="keyword">
                                     <option  value="1">近7天</option>

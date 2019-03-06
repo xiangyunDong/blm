@@ -29,3 +29,5 @@ Route::get('logout','LoginController@destroy')->name('logout');
 Route::resource('activities','ActivityController');
 Route::resource('members','MemberController');
 Route::patch('members/{member}/reset','MemberController@reset')->name('members.reset');
+Route::resource('roles','RoleController');
+Route::resource('permissions','PermissionController');

@@ -22,6 +22,7 @@ Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
 Route::post('/upload','MenuController@upload')->name('upload');
+Route::get('menus/count','MenuController@count')->name('menus.count');
 Route::resource('menus','MenuController');
 Route::resource('menu_categories','MenuCategoryController');
 Route::resource('activities','ActivityController');

@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Menu;
 use App\MenuCategory;
+use App\Order;
+use App\OrderDetail;
 use App\Shop;
 use App\ShopCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
@@ -124,4 +128,36 @@ class MenuController extends Controller
         $path=Storage::url($img->store('public/menus'));
         return ['path'=>$path];
     }
+
+    public function count(Request$request)
+    {
+        $keyword = $request->keyword;
+            $shop_id=Auth::user()->shop_id;
+        if ($keyword == 1) {
+            $title = "近一周菜品销量";
+            $time_start=date('Y-m-d 00:00:00',strtotime('-6 day'));
+            $time_end=date('Y-m-d 23:59:59');
+            $sql="select date(orders.created_at),order_details.goods_name,sum(order_details.amount)
+            from orders join order_details on orders.id=order_details.order_id
+            where orders.created_at between '$time_start' and '$time_end'and orders.shop_id=$shop_id
+            group by order_details.goods_name,date(orders.created_at)";
+            $rows=DB::select($sql);
+            //dd($rows);
+            //构造7天数据格式
+            $datas=[];
+            for ($i=0;$i<7;$i++):
+                $datas[date('Y-m-d',strtotime('-{$i} day'))]=0;
+                endfor;
+                dd($datas);
+            return view('order.count', compact('title', 'datas'));
+        } elseif ($keyword == 2) {
+            $title = "近三月菜品销量";
+
+            return view('order.count', compact('title', 'datas'));
+        } elseif ($keyword == -1) {
+
+            return view('menus.count', compact('title', 'datas'));
+        }
+    }
+
 }
