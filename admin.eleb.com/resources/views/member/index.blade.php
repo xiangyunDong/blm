@@ -1,5 +1,11 @@
 @extends('layout.app')
 @section('contents')
+    <form class="navbar-form navbar-left" method="get" action="{{route('members.index')}}">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="请输入会员名或手机号" name="keyword">
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+    </form>
     <table class="table table-bordered">
         <tr>
             <th>id</th>

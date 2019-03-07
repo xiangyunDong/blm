@@ -19,7 +19,11 @@
                         $resul = mysqli_query($link,$sq);
                         while($res = mysqli_fetch_assoc($resul)):
                         ?>
+                        @if(auth()->user())
+                        @if(auth()->user()->can($res['url']))
                         <li><a href="{{route($res['url'])}}"><?=$res['name']?></a></li>
+                            @endif
+                            @endif
                             <?php
                             endwhile;
                             ?>
@@ -29,22 +33,6 @@
                 <?php
                 endwhile;
                 ?>
-            <form class="navbar-form navbar-left" method="get" action="{{route('members.index')}}">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="请输入会员名或手机号" name="keyword">
-                </div>
-                <button type="submit" class="btn btn-default">搜索</button>
-            </form>
-            <form class="navbar-form navbar-left" method="get" action="{{route('activities.index')}}">
-                <div class="form-group">
-                    <select class="form-control" name="keyword">
-                        <option  value="1">未开始</option>
-                        <option  value="2">进行中</option>
-                        <option  value="-1">已结束</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-default">提交</button>
-            </form>
             <ul class="nav navbar-nav">
                 @guest()
                 <li><a href="{{route('login')}}">登录</a></li>
