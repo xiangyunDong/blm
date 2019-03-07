@@ -31,3 +31,4 @@ Route::resource('members','MemberController');
 Route::patch('members/{member}/reset','MemberController@reset')->name('members.reset');
 Route::resource('roles','RoleController');
 Route::resource('permissions','PermissionController');
+Route::resource('navs','NavController');

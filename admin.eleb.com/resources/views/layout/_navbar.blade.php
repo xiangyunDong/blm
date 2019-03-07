@@ -1,91 +1,50 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-
-
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <?php
+            header("content-type:text/html;charset=utf-8");
+            $link = mysqli_connect("localhost","root","root","blm") or die("链接出错");
+            mysqli_query($link,"set names utf8");
+            $sql = "select * from navs where pid=0";
+            $result = mysqli_query($link,$sql);
+            while($row = mysqli_fetch_assoc($result)):
+                ?>
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商家分类管理<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$row['name']?><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{route('shop_categories.create')}}">添加分类</a></li>
-                        <li><a href="{{route('shop_categories.index')}}">分类列表</a></li>
+                        <?php
+                        $sq = "select * from navs where pid=".$row['id'];
+                        $resul = mysqli_query($link,$sq);
+                        while($res = mysqli_fetch_assoc($resul)):
+                        ?>
+                        <li><a href="{{route($res['url'])}}"><?=$res['name']?></a></li>
+                            <?php
+                            endwhile;
+                            ?>
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商家信息管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('shops.create')}}">添加商家</a></li>
-                        <li><a href="{{route('shops.index')}}">商家列表</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商家账号管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('users.create')}}">添加商家账号</a></li>
-                        <li><a href="{{route('users.index')}}">商家账号列表</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">会员账号管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('members.index')}}">会员账号列表</a></li>
-                    </ul>
-                </li>
-            </ul>
+                <?php
+                endwhile;
+                ?>
             <form class="navbar-form navbar-left" method="get" action="{{route('members.index')}}">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="请输入会员名或手机号" name="keyword">
                 </div>
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员账号管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('admins.create')}}">添加管理员账号</a></li>
-                        <li><a href="{{route('admins.index')}}">管理员账号列表</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">活动管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('activities.create')}}">添加活动</a></li>
-                        <li><a href="{{route('activities.index')}}">活动列表</a></li>
-                        <form class="navbar-form navbar-left" method="get" action="{{route('activities.index')}}">
-                            <div class="form-group">
-                                <select class="form-control" name="keyword">
-                                    <option  value="1">未开始</option>
-                                    <option  value="2">进行中</option>
-                                    <option  value="-1">已结束</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-default">提交</button>
-                        </form>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">RBAC<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('permissions.create')}}">添加权限</a></li>
-                        <li><a href="{{route('permissions.index')}}">权限列表</a></li>
-                        <li><a href="{{route('roles.create')}}">添加角色</a></li>
-                        <li><a href="{{route('roles.index')}}">角色列表</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <form class="navbar-form navbar-left" method="get" action="{{route('activities.index')}}">
+                <div class="form-group">
+                    <select class="form-control" name="keyword">
+                        <option  value="1">未开始</option>
+                        <option  value="2">进行中</option>
+                        <option  value="-1">已结束</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default">提交</button>
+            </form>
             <ul class="nav navbar-nav">
                 @guest()
                 <li><a href="{{route('login')}}">登录</a></li>
