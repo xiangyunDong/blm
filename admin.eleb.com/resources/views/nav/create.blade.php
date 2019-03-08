@@ -16,6 +16,7 @@
         </select>
         <label>对应权限</label>
         <select class="form-control" name="permission_id">
+            <option value="0">无权限</option>
             @foreach($permissions as $permission)
                 <option value="{{$permission->id}}">{{$permission->name}}</option>
             @endforeach

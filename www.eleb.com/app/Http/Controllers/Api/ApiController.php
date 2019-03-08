@@ -21,6 +21,12 @@ use Qcloud\Sms\SmsSingleSender;
 
 class ApiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'
+        );
+    }
+
     public function businessList(Request$request){
         $wheres[]=['status',1];
         if($request->keyword){
@@ -71,11 +77,12 @@ class ApiController extends Controller
             $ssender = new SmsSingleSender($appid, $appkey);
             $params = [mt_rand(1000,9999),5];
 
-          $result = $ssender->sendWithParam("86", $phoneNumber, $templateId,
+          $ssender->sendWithParam("86", $phoneNumber, $templateId,
                 $params, $smsSign, "", "");
             Redis::set($phoneNumber,$params[0]);
+            return ["status" => "true", "message" => "短信发送成功"];
         } catch(\Exception $e) {
-            var_dump($e);
+            return ["status" => "false", "message" => "短信发送失败"];
         }
     }
 
@@ -283,6 +290,29 @@ class ApiController extends Controller
                     });
             }catch (Exception $e){
                 return '邮件发送失败';
+            }
+
+            $appid = 1400189719; // 1400开头
+
+// 短信应用SDK AppKey
+            $appkey = "7571e72a66c0d376d93346d2ce7fb416";
+
+// 需要发送短信的手机号码
+            $phoneNumber =auth()->user()->tel;
+            //dd($phoneNumber);
+
+// 短信模板ID，需要在短信应用中申请
+            $templateId = 285069;  // NOTE: 这里的模板ID`7839`只是一个示例，真实的模板ID需要在短信控制台中申请
+
+            $smsSign = "陈贸生活记录"; // NOTE: 这里的签名只是示例，请使用真实的已申请的签名，签名参数使用的是`签名内容`，而不是`签名ID`
+            $content="您的订单已下单成功，请等待取餐";
+            try {
+                $ssender = new SmsSingleSender($appid, $appkey);
+
+                $ssender->sendWithParam("86", $phoneNumber, $content,
+                     $smsSign, "", "");
+            } catch(\Exception $e) {
+                return ["status" => "false", "message" => "短信发送失败"];
             }
 
             return[

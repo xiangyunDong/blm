@@ -30,4 +30,4 @@ Route::get('orders/count','OrderController@count')->name('orders.count');
 Route::resource('orders','OrderController');
 Route::patch('orders/{order}/send','OrderController@send')->name('orders.send');
 Route::patch('orders/{order}/cancel','OrderController@cancel')->name('orders.cancel');
-
+Route::resource('events','EventController');

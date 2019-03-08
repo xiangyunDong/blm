@@ -11,6 +11,7 @@
             while($row = mysqli_fetch_assoc($result)):
             ?>
                 @if(auth()->user())
+
             <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
