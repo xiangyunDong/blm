@@ -142,16 +142,30 @@ class MenuController extends Controller
             where orders.created_at between '$time_start' and '$time_end'and orders.shop_id=$shop_id
             group by order_details.goods_name,date(orders.created_at)";
             $rows=DB::select($sql);
-            dd($rows);
+            //dd($rows);
             $datas=[];
             foreach ($rows as $row):
-                for ($i=0;$i<7;$i++):
-                    $datas[$row->goods_name][date('Y-m-d',strtotime("-{$i} day"))]=0;
-                endfor;
-                $datas[$row->goods_name][$row->date]=$row->sum;
+            for ($i=0;$i<7;$i++):
+                $datas[$row->goods_name][date('Y-m-d',strtotime("-{$i} day"))]=0;
+            endfor;
             endforeach;
-            dd($datas);
-            return view('menu.count',compact('title','datas'));
+            foreach ($rows as $row):
+                $datas[$row->goods_name][$row->date]+=$row->sum;
+            endforeach;
+            //dd($datas);
+            $series=[];
+            foreach ($datas as $k=>$v):
+            $serie=[
+                'name'=>$k,
+            'type'=>'line',
+            'stack'=>'销量',
+             'areaStyle'=>'{}',
+            'data'=>array_values($v)
+            ];
+            $series[]=$serie;
+            endforeach;
+            //dd($series);
+            return view('menu.count',compact('title','series'));
         } elseif ($keyword == 2) {
             $title = "近三月菜品销量";
 

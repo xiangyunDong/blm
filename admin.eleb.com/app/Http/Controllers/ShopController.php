@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\ShopCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
@@ -115,6 +116,19 @@ class ShopController extends Controller
         $shop->status=1;
         $shop->save();
         session()->flash('success','商家审核成功');
+        $title = '邮件体验';
+        $content = '<p>	
+            重要的邮件如何才能让<span style="color: red">对方立刻查看</span>！
+            随身邮，可以让您享受随时短信提醒和发送邮件可以短信通知收件人的服务，重要的邮件一个都不能少！</p>';
+        try{
+            Mail::send('email.default',compact('title','content'),
+                function($message){
+                    $to = 'm13551100357@163.com';
+                    $message->from(env('MAIL_USERNAME'))->to($to)->subject('邮件体验');
+                });
+        }catch (Exception $e){
+            return '邮件发送失败';
+        }
         return redirect()->route('shops.index');
     }
 }

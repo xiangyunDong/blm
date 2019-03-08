@@ -21,6 +21,7 @@
             <td>{{$member->tel}}</td>
             <td>{{$member->status==1?'启用':'禁用'}}</td>
             <td><a href="{{route('members.show',[$member])}}">查看</a>
+                @can('members.reset')
                 <form method="post" style="display: inline" action="{{route('members.reset',[$member])}}">
                     {{csrf_field()}}
                     {{method_field('patch')}}
@@ -30,11 +31,14 @@
                         <button type="submit" class="btn btn-link">启用</button>
                         @endif
                 </form>
+                @endcan
+                @can('members.destory')
                 <form method="post" style="display: inline" action="{{route('members.destroy',[$member])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button type="submit" class="btn btn-link">删除</button>
                 </form>
+                    @endcan
             </td>
         </tr>
             @endforeach

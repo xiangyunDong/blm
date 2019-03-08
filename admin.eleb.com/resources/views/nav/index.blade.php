@@ -13,12 +13,16 @@
             <td>{{$nav->id}}</td>
             <td>{{$nav->name}}</td>
             <td>{{$nav->url}}</td>
-            <td><a href="{{route('navs.edit',[$nav])}}">编辑</a>
+            <td>@can('navs.edit')
+                <a href="{{route('navs.edit',[$nav])}}">编辑</a>
+                @endcan
+                @can('navs.destory')
                 <form method="post" style="display: inline" action="{{route('navs.destroy',[$nav])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button type="submit" class="btn btn-link">删除</button>
                 </form>
+                    @endcan
             </td>
         </tr>
             @endforeach

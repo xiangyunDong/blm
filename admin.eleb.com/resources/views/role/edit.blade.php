@@ -6,7 +6,7 @@
         <label>名称</label>
         <input class="form-control" type="text" name="name" value="{{$role->name}}">
         <label>权限</label>
-        <div class="form-control">
+        <div>
             @foreach($permissions as $permission):
                 <input type="checkbox" name="permissions[]" value="{{$permission->name}}"
                        @if($role->hasPermissionTo($permission->name)) checked @endif

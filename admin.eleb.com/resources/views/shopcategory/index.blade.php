@@ -15,16 +15,17 @@
             <td><img src="{{$shop_category->img}}"style="width: 50px" ></td>
             <td>{{$shop_category->status==1?'显示':'隐藏'}}</td>
 
-            <td>@if(auth()->user()->can('shop_categories.edit'))
-                <a href="{{route('shop_categories.edit',[$shop_category])}}">编辑</a>
-                @endif
-                @if(auth()->user()->can('shop_categories.del'))
+            <td>@can('shop_categories.edit')
+                        <a href="{{route('shop_categories.edit',[$shop_category])}}">编辑</a>
+                @endcan
+
+                @can('shop_categories.del')
                 <form method="post" style="display: inline" action="{{route('shop_categories.destroy',[$shop_category])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button type="submit" class="btn btn-link">删除</button>
                 </form>
-                    @endif
+                @endcan
             </td>
         </tr>
             @endforeach

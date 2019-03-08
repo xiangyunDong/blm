@@ -24,12 +24,16 @@
             <td>{{$activity->title}}</td>
            <td>{{$activity->start_time}}</td>
             <td>{{$activity->end_time}}</td>
-            <td><a href="{{route('activities.edit',[$activity])}}">编辑</a>
+            <td>@can('activities.edit')
+                <a href="{{route('activities.edit',[$activity])}}">编辑</a>
+                @endcan
+                @can('activities.destory')
                 <form method="post" style="display: inline" action="{{route('activities.destroy',[$activity])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button type="submit" class="btn btn-link">删除</button>
                 </form>
+                    @endcan
             </td>
         </tr>
             @endforeach

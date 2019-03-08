@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Qcloud\Sms\SmsSingleSender;
 
@@ -269,10 +270,26 @@ class ApiController extends Controller
         if ($a&&$b){
             DB::commit();
             DB::delete('delete from carts');
+
+            $title = '邮件体验';
+            $content = '<p>	
+            重要的邮件如何才能让<span style="color: red">对方立刻查看</span>！
+            随身邮，可以让您享受随时短信提醒和发送邮件可以短信通知收件人的服务，重要的邮件一个都不能少！</p>';
+            try{
+                Mail::send('email.default',compact('title','content'),
+                    function($message){
+                        $to = 'm13551100357@163.com';
+                        $message->from(env('MAIL_USERNAME'))->to($to)->subject('邮件体验');
+                    });
+            }catch (Exception $e){
+                return '邮件发送失败';
+            }
+
             return[
                 "status"=>"true",
                 "message"=>"添加成功",
                 "order_id"=>$order_detail->order_id];
+
         }else{
             DB::rollBack();
             return[

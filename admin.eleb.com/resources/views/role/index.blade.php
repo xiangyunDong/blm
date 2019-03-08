@@ -11,12 +11,16 @@
         <tr>
             <td>{{$role->id}}</td>
             <td>{{$role->name}}</td>
-            <td><a href="{{route('roles.edit',[$role])}}">编辑</a>
+            <td>@can('roles.edit')
+                <a href="{{route('roles.edit',[$role])}}">编辑</a>
+                @endcan
+                @can('roles.destory')
                 <form method="post" style="display: inline" action="{{route('roles.destroy',[$role])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button type="submit" class="btn btn-link">删除</button>
                 </form>
+                    @endcan
             </td>
         </tr>
             @endforeach

@@ -13,12 +13,16 @@
             <td>{{$admin->id}}</td>
             <td>{{$admin->name}}</td>
             <td>{{$admin->email}}</td>
-            <td><a href="{{route('admins.edit',[$admin])}}">编辑</a>
+            <td>@can('admins.edit')
+                <a href="{{route('admins.edit',[$admin])}}">编辑</a>
+                @endcan
+                @can('admins.destory')
                 <form method="post" style="display: inline" action="{{route('admins.destroy',[$admin])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button type="submit" class="btn btn-link">删除</button>
                 </form>
+                    @endcan
             </td>
         </tr>
             @endforeach

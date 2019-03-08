@@ -16,17 +16,23 @@
             <td>{{$user->email}}</td>
             <td>{{$user->shop_id}}</td>
             <td>{{$user->status==1?'启用':'禁用'}}</td>
-            <td><a href="{{route('users.edit',[$user])}}">编辑</a>
+            <td>@can('users.edit')
+                <a href="{{route('users.edit',[$user])}}">编辑</a>
+                @endcan
+                @can('users.reset')
                 <form method="post" style="display: inline" action="{{route('users.reset',[$user])}}">
                     {{csrf_field()}}
                     {{method_field('patch')}}
                     <button type="submit" class="btn btn-link">重置密码</button>
                 </form>
+                @endcan
+                @can('users.destory')
                 <form method="post" style="display: inline" action="{{route('users.destroy',[$user])}}">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button type="submit" class="btn btn-link">删除</button>
                 </form>
+                    @endcan
             </td>
         </tr>
             @endforeach

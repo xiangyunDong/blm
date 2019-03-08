@@ -14,6 +14,12 @@
                 <option value="{{$nav->id}}">{{$nav->name}}</option>
             @endforeach
         </select>
+        <label>对应权限</label>
+        <select class="form-control" name="permission_id">
+            @foreach($permissions as $permission)
+                <option value="{{$permission->id}}">{{$permission->name}}</option>
+            @endforeach
+        </select>
         {{csrf_field()}}
         <button class="btn bg-primary" type="submit">提交</button>
     </form>
