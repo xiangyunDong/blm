@@ -22,14 +22,27 @@ class MenuController extends Controller
     }
     public function index(Request$request){
         $keyword=$request->keyword;
-        $price1=$request->price1;
-        $price2=$request->price2;
-        $wheres=[];
-        if ($keyword) $wheres[]=['goods_name','like',"%$keyword%"];
-        if ($price1) $wheres[]=['goods_price','>=',$price1];
-        if ($price2) $wheres[]=['goods_price','<=',$price2];
-        $menus=Menu::where($wheres)->paginate(3);
-        return view('menu.index',compact('menus','keyword','price1','price2'));
+        if ($keyword){
+            $cl = new \App\SphinxClient();
+            $cl->SetServer ( '127.0.0.1', 9312);
+            $cl->SetConnectTimeout ( 10 );
+            $cl->SetArrayResult ( true );
+            $cl->SetMatchMode ( SPH_MATCH_EXTENDED2);
+            $cl->SetLimits(0, 1000);
+            $info = $keyword;
+            $res = $cl->Query($info, 'menus');
+            $ids=[];
+            if (isset($res['matches'])){
+                foreach ($res['matches'] as $r):
+                    $ids[]=$r['id'];
+                endforeach;
+                $menus=Menu::wherein('id',$ids)->paginate(3);
+                return view('menu.index',compact('menus','keyword'));
+            }
+        }
+            $menus=Menu::paginate(3);
+            $keyword='';
+        return view('menu.index',compact('menus','keyword'));
     }
 
     public function create(){

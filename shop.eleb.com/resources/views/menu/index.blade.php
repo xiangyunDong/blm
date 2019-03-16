@@ -30,5 +30,5 @@
         </tr>
             @endforeach
     </table>
-    {{ $menus->appends(['keyword'=>$keyword,'price1'=>$price1,'price2'=>$price2])->links() }}
+    {{ $menus->appends(['keyword'=>$keyword])->links() }}
     @stop
